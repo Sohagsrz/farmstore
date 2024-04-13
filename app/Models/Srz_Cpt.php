@@ -11,7 +11,6 @@ class Srz_Cpt extends Model
     use HasFactory;
     use GenerateUniqueSlugTrait;
     protected $table = 'srz_cpt';
-    // protected $fillable = ['cpt_code','cpt_description','cpt_price'];
     
     public function get_all_cpt()
     {
