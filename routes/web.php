@@ -20,34 +20,11 @@ use App\Models\User;
 |
 */
 
-Route::get('/', function () {
-    // add new cpt
-    // $cpt = new \App\Models\Srz_Cpt();
-    // $cpt->post_type = 'post';
-    // $cpt->post_title = 'I am Sohag';
-    // $cpt->post_content = 'Hello world';
-    // $cpt->post_status = 'publish';
-    // $cpt->post_author = Auth::id();
-    // // $cpt->post_slug= 'test-title'; 
-    // $cpt->post_parent=  0; 
-
-    // $cpt->post_comment_status = 'open'; 
-    // $cpt->save();
-    // var_dump(test());
-    // $custom_fields = new CustomFields();
-    // $custom_fields->name = 'img';
-    // $custom_fields->value = 'nai';
-    // $custom_fields->type = 'user';
-    // $custom_fields->obj_id = Auth::id();
-    // $custom_fields->save();
-    // CustomOptions::setOption('siteurl', 'https://localhost:8000');
-    // var_dump(CustomOptions::getOption('siteurl'));
-
-    // CustomFields::addField('img', 'nai', 'user', Auth::id());
-    // var_dump(CustomFields::getField('img', 'user', Auth::id()));
-
+Route::get('/', function () { 
+    // get recent movies 
+    $posts = \App\Models\Srz_Cpt::where('post_type', 'movies')->orderBy('id', 'desc')->limit(5)->get();
     
-    return view('home');
+    return view('home', compact('posts'));
 
 });
 
@@ -58,10 +35,13 @@ Route::get('search', function(Request $request){
     return view('search', compact('posts'));
 });
 
-//single view , post_type=movies
-Route::get('movies/{id}', function($id){
-    $post = \App\Models\Srz_Cpt::where('id', $id)->where('post_type', 'movies')->first();
-    return view('single.movies', compact('post'));
+ 
+//catergory view
+Route::get('category/{slug}', function($slug){
+    $category = \App\Models\Category::where('slug', $slug)->first();
+    
+    $posts = \App\Models\Srz_Cpt::where('post_type', 'post')->where('category', $category->id)->get();
+    return view('category', compact('posts'));
 });
 
 
@@ -102,4 +82,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
 
 });
 
- 
+//single view post_type=movies and /{slug}
+Route::get('/{slug}', function($slug){
+    $post = \App\Models\Srz_Cpt::where('post_slug', $slug)->where('post_type', 'movies')->first();
+    return view('single.movies', compact('post'));
+});
+
+// fallaback route
+Route::fallback(function(){
+    return view('404');
+});
