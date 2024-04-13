@@ -75,8 +75,6 @@ Route::get('category/{category}', function(Category $category){
 
 
 
-
-
 //login routes
 Route::get('login', [AuthController::class,'login'])->middleware('guest')->name('login');
 
@@ -104,9 +102,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
         return view('admin.pages.dashboard');
     })->name('dashboardHome');
 
+
     Route::get('dashboard', function () {
         return view('admin.pages.dashboard');
     })->name('dashboard');
+
     //movies manage group route , view like admin.pages.movies
     Route::group(['prefix' => 'movies', 'as' => 'movies.'], function () {
 
@@ -145,9 +145,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
         return view('admin.users');
     })->name('users');
 
-    Route::get('settings', function () {
-        return view('admin.pages.settings');
-    })->name('settings');
+    Route::get('settings', function () {  return view('admin.pages.settings'); })->name('settings');
     //store settings 
     Route::post('settings', [App\Http\Controllers\AdminController::class, 'settingsStore'] )->name('settingsProccess');
     

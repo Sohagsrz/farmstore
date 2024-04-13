@@ -69,11 +69,11 @@
                    
                     <div class="mb-3">
                         <label for="logo" class="form-label">Logo URL</label>
-                        <input type="url" name="logo" class="form-control" id="logo"  >
+                        <input type="url" name="logo" class="form-control" id="logo"  value="{{get_option('logo','')}}" >
                     </div>
                     <div class="mb-3">
                         <label for="favicon" class="form-label">Favicon URL</label>
-                        <input type="url" name="favicon" class="form-control" id="favicon"  >
+                        <input type="url" name="favicon" class="form-control" id="favicon"  value="{{get_option('favicon','')}}"  >
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Site Email</label>
