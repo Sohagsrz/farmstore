@@ -10,7 +10,7 @@ class AuthController extends Controller
 {
     public function login()
     {
-        return View::make('pages.home');
+        return View::make('auth.login');
     }
 
     public function postlogin(Request $request)
