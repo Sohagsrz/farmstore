@@ -78,7 +78,7 @@ function get_option($name, $default = '')
 }
 
 //update option
-function set_option($name, $value)
+function update_option($name, $value)
 {
     CustomOptions::setOption($name, $value);
 }

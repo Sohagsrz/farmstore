@@ -48,7 +48,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin.dashboard')}}">
+                        <a class="nav-link" href="{{route('admin.categories.categoriesHome')}}">
                             <i class="bi bi-building-add"></i> Categories
                         </a>
                     </li>

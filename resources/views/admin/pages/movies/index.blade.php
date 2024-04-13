@@ -7,31 +7,24 @@
     <main class="py-6 bg-surface-secondary">
         <div class="container-fluid">
             <!-- Card stats -->
-            <?php 
-            // laravel sucess or error allert
-            if(Session::has('success')){
-                ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <span class="alert-icon"><i class="bi bi-check-circle"></i></span>
-                    <span class="alert-text
-                    "><?php echo Session::get('success');?></span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <?php
-            }
-            if(Session::has('error')){
-                ?>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span class="alert-icon
-                    "><i class="bi bi-x-circle"></i></span>
-                    <span class="alert-text
-                    "><?php echo Session::get('error');?></span>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <?php
-            }
-            
-            ?>
+            @if(Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span class="alert-icon"><i class="bi bi-check-circle"></i></span>
+                <span class="alert-text
+                ">{{Session::get('success')}}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            @if (count($errors) > 0)
+            @foreach ($errors->all() as $error)
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span class="alert-icon"><i class="bi bi-x-circle"></i></span>
+                <span class="alert-text
+                ">{{$error}}</span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endforeach
+            @endif
             <div class="card shadow border-0 mb-7">
                 <div class="card-header">
                     <div class="row align-items-center">

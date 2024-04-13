@@ -25,7 +25,9 @@ use Illuminate\Support\Facades\View;
 */
 
 Route::get('/', function () {
-    
+    /***
+     * 
+     * 
     //add new movie
     $movie = new Srz_Cpt();
     $movie->post_title = 'New Movie 2';
@@ -34,7 +36,7 @@ Route::get('/', function () {
     $movie->save();
  
     //add new category
-    $category = new \App\Models\Category();
+    $category = new Category();
     $category->name = 'Comedyx';
     $category->slug = 'comedyx';
     $category->type = 'movies'; 
@@ -44,27 +46,32 @@ Route::get('/', function () {
         'post_id' => $movie->id,
         'category_id' => $category->id
     ]);
+
+    ***/
+
     // get recent movies 
-    $posts = \App\Models\Srz_Cpt::where('post_type', 'movies')->orderBy('id', 'desc')->limit(5)->get();
+    $posts = Srz_Cpt::where('post_type', 'movies')->orderBy('id', 'desc')->limit(5)->get();
     return View::make('pages.home', compact('posts'));
 
 });
 
 //search results
 Route::get('search', function(Request $request){
-    $search = $request->input('search');
-    $posts = \App\Models\Srz_Cpt::where('post_title', 'like', '%'.$search.'%')->get();
-    return view('search', compact('posts'));
+    $search = $request->input('q');
+    $posts =  Srz_Cpt::where('post_title', 'like', '%'.$search.'%')->get();
+    return view('pages.search', compact('posts'));
 });
 
  
 //catergory view
-Route::get('category/{slug}', function($slug){
-    $category = \App\Models\Category::where('slug', $slug)->first();
+
+Route::get('category/{category}', function(Category $category){ 
     
-    $posts = \App\Models\Srz_Cpt::where('post_type', 'post')->where('category', $category->id)->get();
-    return view('category', compact('posts'));
-});
+    $posts =  $category->posts()->get(); 
+    
+    return view('pages.category', compact('category','posts'));
+
+})->name('category');
 
 
 
@@ -127,29 +134,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
 
         Route::get('edit/{id}', [App\Http\Controllers\CategoryController::class, 'edit'] ) ->name('edit');
         //post update
-        Route::post('edit/{id}', [App\Http\Controllers\CategoryController::class, 'update'] )->name('update');
+        Route::post('update/{id}', [App\Http\Controllers\CategoryController::class, 'update'] )->name('update');
         
         //delete category
         Route::get('delete/{id}',  [App\Http\Controllers\CategoryController::class, 'delete'] )->name('delete');
-
     });
 
-
-    
 
     Route::get('users', function () {
         return view('admin.users');
     })->name('users');
 
     Route::get('settings', function () {
-        return view('admin.settings');
+        return view('admin.pages.settings');
     })->name('settings');
-
-
+    //store settings 
+    Route::post('settings', [App\Http\Controllers\AdminController::class, 'settingsStore'] )->name('settingsProccess');
+    
 });
 
 //single view post_type=movies and /{slug}
 Route::get('/{movie}', [App\Http\Controllers\MoviesController::class, 'single'])->name('single' );
+
 
 // fallaback route
 Route::fallback(function(){

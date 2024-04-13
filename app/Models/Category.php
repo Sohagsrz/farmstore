@@ -16,6 +16,12 @@ class Category extends Model
     {
         return $this->belongsToMany(Srz_Cpt::class, 'category_relation', 'category_id', 'post_id');
     }
+    // route model binding
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+    
  
 
 }

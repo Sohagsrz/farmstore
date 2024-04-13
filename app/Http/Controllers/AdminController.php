@@ -15,38 +15,20 @@ class AdminController extends Controller
     }
         
     public function search(Request $request)
-    {
-        $search = $request->input('search');
-        $posts = \App\Models\Srz_Cpt::where('post_title', 'like', '%'.$search.'%')->get();
-        return view('search', compact('posts'));
+    { 
+
     }
 
-    public function MovieStore(Request $request){
-    }
-   
-    //delete
-
-    public function MovieDelete($id)
-    {
-        $post = \App\Models\Srz_Cpt::find($id);
-        $post->delete();
-        return redirect()->back();
-    }
-    // edit
-    public function edit($id)
-    {
+    public function settingsStore(Request $request){
         
-        $post = \App\Models\Srz_Cpt::find($id);
-        return view('admin.pages.movies.edit-movie', compact('post'));
-    }
-    //update
-    public function update(Request $request, $id)
-    {
-        $post = \App\Models\Srz_Cpt::find($id);
-        $post->post_title = $request->input('post_title');
-        $post->post_content = $request->input('post_content');
-        $post->save();
-        return redirect()->back();
+        unset($request['_token']);
+
+        foreach($request->all() as $key => $value){ 
+            update_option($key, $value);
+        }
+        return redirect()->back()->with('success', 'Settings updated successfully');
+        
+
     }
     
 }
