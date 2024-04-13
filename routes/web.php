@@ -8,6 +8,7 @@ use App\Models\CustomFields;
 use App\Models\CustomOptions;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\View;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +24,7 @@ use App\Models\User;
 Route::get('/', function () { 
     // get recent movies 
     $posts = \App\Models\Srz_Cpt::where('post_type', 'movies')->orderBy('id', 'desc')->limit(5)->get();
-    
-    return view('home', compact('posts'));
+    return View::make('pages.home', compact('posts'));
 
 });
 
