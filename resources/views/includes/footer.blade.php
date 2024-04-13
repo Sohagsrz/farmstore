@@ -1,1 +1,1 @@
-<div id="copyright text-right">© Copyright 2017 Saquib Rizwan </div>
+<div id="copyright text-right">© Copyright {{date('Y')}} Md Sohag Islam </div>
