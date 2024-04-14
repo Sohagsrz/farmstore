@@ -66,7 +66,7 @@ function get_field($name, $type, $obj_id, $default = '')
 }
 
 // add new field
-function add_field($name, $value, $type, $obj_id)
+function update_field($name, $value, $type, $obj_id)
 {
     CustomFields::addField($name, $value, $type, $obj_id);
 }
@@ -78,7 +78,7 @@ function get_option($name, $default = '')
 }
 
 //update option
-function set_option($name, $value)
+function update_option($name, $value)
 {
     CustomOptions::setOption($name, $value);
 }
