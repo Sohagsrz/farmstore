@@ -38,6 +38,8 @@ class CategoryController extends Controller
 
         
         $total_pages= ceil($total_cats/$limit);
+        
+
         $categories= Category::where([
             'type' =>$type,
             // 'status' => 1
@@ -55,7 +57,7 @@ class CategoryController extends Controller
     public function add()
     {
         $type= "movies";
-        $name= 'Category';
+        $name= 'Category'; 
         
         $categories = Category::where('type', $type)
         ->orderBy('name', 'asc')
@@ -111,12 +113,15 @@ class CategoryController extends Controller
 
  
         $categories = Category::where('type', $type)
+        ->whereNotIn('id', [$id])
         ->orderBy('name', 'asc')
         ->get();
-
+    
         $category = Category::find($id);
         
-        $selected_categories = Category_Relation::where('post_id', $id)->pluck('category_id')->toArray();
+        $selected_categories = Category_Relation::where('post_id', $id)
+       
+        ->pluck('category_id')->toArray();
 
         return view('admin.pages.categories.edit-category', compact('category', 'categories', 'selected_categories','type','name'));
 

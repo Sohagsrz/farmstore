@@ -77,7 +77,7 @@ class Srz_Cpt extends Model
     //custom fields for user, get with name & value, type=user and obj_id = user_id
     public function custom_fields()
     {
-        return $this->hasMany(CustomFields::class, 'obj_id', 'id')->where('type', $this->post_type);
+        return $this->hasMany(CustomFields::class, 'obj_id', 'id')->where('type', $this->post_type)->select('name', 'value')->get();
     }
     // set custom field
     public function setCustomField($name, $value)

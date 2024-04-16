@@ -32,7 +32,7 @@
                             <h5 class="mb-0">All {{$name}}</h5>
                         </div>
                         <div class="col text-end">
-                            <a href="{{route('admin.users.add')}}" class="btn btn-sm btn-primary">Add New</a>
+                            <a href="{{route('admin.news.add')}}" class="btn btn-sm btn-primary">Add New</a>
                         </div>
                     </div> 
                      
@@ -42,45 +42,39 @@
                 <table class="table table-hover table-nowrap">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Role</th> 
-                                        <th scope="col">Created At</th>
-                                        <th scope="col">Action</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Added</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Views</th>
+                                        <th scope="col">Edit / Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if(count($users)==0)
+                                    @if(count($news)==0)
                                     <tr>
-                                        <td colspan="5" class="text-center">No Users Found</td>
+                                        <td colspan="5" class="text-center">No News Found</td>
                                     </tr>
                                     @endif
-                                    @foreach($users as $user)
+                                    @foreach($news as $newss)
                                     <tr> 
                                         <td>
-                                            {{$user->name}}
-                                        </td> 
+                                            {{$newss->post_title}}
+                                        </td>
                                         <td>
-                                            {{$user->email}}
+                                            {{date('d M Y',strtotime($newss->created_at))}}
+                                        </td>
+                                        <td>
+                                            {{$newss->post_status}}
                                         </td>
                                          
-                                        <td> 
-                                            {{
-                                                ( $user->getRole())
-                                            }}
-                                        </td> 
                                         <td>
-                                            {{$user->created_at->diffForHumans()}}
+                                            {{intval(get_field('views','news', $newss->id, 0))}}
                                         </td>
-
                                         <td class="text-end">
-                                            @if($user->id != auth()->user()->id) 
-                                            <a href="{{route('admin.users.edit',['id'=>$user->id])}}" class="btn btn-sm btn-neutral"><i class="bi bi-pencil"></i></a>
-                                            <a href="{{route('admin.users.delete',['id'=>$user->id])}}" onclick="return confirm('Are you sure you want to delete ?')" class="btn btn-sm btn-neutral"> <i class="bi bi-trash"></i></a>
-                                            @else
-                                             <b>Your Account :) </b>
-                                             @endif
-
+                                        <a href="/{{$newss->post_slug}}" class="btn btn-sm btn-neutral" target="_blank"><i class="bi bi-eye"></i></a>
+                                            <a href="{{route('admin.news.edit',['id'=>$newss->id])}}" class="btn btn-sm btn-neutral"><i class="bi bi-pencil"></i></a>
+                                            <a href="{{route('admin.news.delete',['id'=>$newss->id])}}" onclick="return confirm('Are you sure you want to delete ?')" class="btn btn-sm btn-neutral"> <i class="bi bi-trash"></i></a>
+                                             
                                         </td>
                                     </tr>
                                     @endforeach
@@ -99,24 +93,24 @@
 
                     
                     <span class="text-muted text-sm">
-                        {{ $users->firstItem()}}-{{ $users->lastItem() }} of {{ $users->total() }} results
+                        {{ $news->firstItem()}}-{{ $news->lastItem() }} of {{ $news->total() }} results
                      </span>
-                     @if($users->total()>0)
-                        <span class="text-muted text-sm">page {{$users->currentPage()}} of {{$users->lastPage()}}</span>
+                     @if($news->total()>0)
+                        <span class="text-muted text-sm">page {{$news->currentPage()}} of {{$news->lastPage()}}</span>
                      @endif
-                     @if ($users->total() > 1)
+                     @if ($news->total() > 1)
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-end mb-0">
-                                <li class="page-item {{ $users->currentPage() == 1 ? 'disabled' : '' }}">
-                                    <a class="page-link" href="{{ $users->previousPageUrl() }}" tabindex="-1" aria-disabled="true">Previous</a>
+                                <li class="page-item {{ $news->currentPage() == 1 ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $news->previousPageUrl() }}" tabindex="-1" aria-disabled="true">Previous</a>
                                 </li>
-                                @for ($i = 1; $i <= $users->lastPage(); $i++)
-                                    <li class="page-item {{ $users->currentPage() == $i ? 'active' : '' }}">
-                                        <a class="page-link" href="{{ $users->url($i) }}">{{ $i }}</a>
+                                @for ($i = 1; $i <= $news->lastPage(); $i++)
+                                    <li class="page-item {{ $news->currentPage() == $i ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ $news->url($i) }}">{{ $i }}</a>
                                     </li>
                                 @endfor
-                                <li class="page-item {{ $users->currentPage() == $users->lastPage() ? 'disabled' : '' }}">
-                                    <a class="page-link" href="{{ $users->nextPageUrl() }}">Next</a>
+                                <li class="page-item {{ $news->currentPage() == $news->lastPage() ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $news->nextPageUrl() }}">Next</a>
                                 </li>
                             </ul>
                         </nav>

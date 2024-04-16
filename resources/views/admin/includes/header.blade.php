@@ -52,6 +52,14 @@
                             <i class="bi bi-building-add"></i> Categories
                         </a>
                     </li>
+
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('admin.news.index')}}">
+                            <i class="bi bi-postcard"></i> News
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('admin.users.index')}}">
                             <i class="bi bi-building-add"></i> Users

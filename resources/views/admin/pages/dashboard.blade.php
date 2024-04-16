@@ -17,7 +17,7 @@
                         <!-- Actions -->
                         <div class="col-sm-6 col-12 text-sm-end">
                             <div class="mx-n1">
-                                <a href="/" target="_blank" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                                <a href="{{url('/')}}" target="_blank" class="btn d-inline-flex btn-sm btn-primary mx-1">
                                     <span class=" pe-2">
                                     <i class="bi bi-binoculars-fill"></i>
                                     </span>
@@ -43,12 +43,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Movies</span>
-                                        <span class="h3 font-bold mb-0"><?php echo db()::table('srz_cpt')->where([
-    'post_type' =>'movies',
-    // 'status' => 1
-    ])->count();?>
-    
-</span>
+                                        <span class="h3 font-bold mb-0"> {{db()::table('srz_cpt')->where([  'post_type' =>'movies',  ])->count()}} </span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
@@ -65,9 +60,7 @@
                                 <div class="row">
                                     <div class="col">
                                         <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Categories</span>
-                                        <span class="h3 font-bold mb-0"><?php echo  db()::table('category')->where([
-    'type' =>'movies'
-    ])->count();?></span>
+                                        <span class="h3 font-bold mb-0"> {{db()::table('category')->where([ 'type' =>'movies' ])->count()}}</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
@@ -83,8 +76,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Users</span>
-                                        <span class="h3 font-bold mb-0"> <?php echo  db()::table('users')->count();?></span>
+                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total News</span>
+                                        <span class="h3 font-bold mb-0">{{ db()::table('srz_cpt')->where([  'post_type' =>'news',   ])->count()}}</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
@@ -95,6 +88,26 @@
                             </div>
                         </div>
                     </div> 
+
+
+                    
+                   <div class="col-xl-3 col-sm-6 col-12">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Users</span>
+                                    <span class="h3 font-bold mb-0"> {{db()::table('users')->count()}}</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
+                                        <i class="bi bi-eye"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
                 </div>
             </div>
         </main>

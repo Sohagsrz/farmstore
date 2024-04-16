@@ -50,6 +50,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(count($movies)==0)
+                                    <tr>
+                                        <td colspan="5" class="text-center">No Movies Found</td>
+                                    </tr>
+                                    @endif
                                     @foreach($movies as $movie)
                                     <tr> 
                                         <td>

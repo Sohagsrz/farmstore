@@ -45,15 +45,30 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Title</th>
+                                        <th scope="col">Parent</th>
                                         <th scope="col">Edit / Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(count($categories)==0)
+                                    <tr>
+                                        <td colspan="5" class="text-center">No Categories Found</td>
+                                    </tr>
+                                    @endif
                                     @foreach($categories as $category)
                                     <tr>
                                         <td>
                                             {{$category->name}}
                                         </td> 
+                                        <td>
+                                            @if($category->parent)
+                                                {{
+                                                    App\Models\Category::where('id',$category->parent)->first()->name
+                                                }}
+                                            @else
+                                                <span class="text-muted">No Parent</span>
+                                            @endif
+                                        </td>
                                         <td>
  
                                             <a href="{{route('category',$category)}}"

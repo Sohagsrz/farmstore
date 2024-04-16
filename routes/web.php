@@ -123,6 +123,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
         Route::get('delete/{id}',  [App\Http\Controllers\MoviesController::class, 'delete'] )->name('delete');
 
     });
+    //news manage group route , view like admin.pages.news
+    Route::group(['prefix' => 'news', 'as' => 'news.'], function () {
+
+        Route::get('/',[App\Http\Controllers\NewsController::class, 'index'])->name('index');
+        Route::get('add',  [ App\Http\Controllers\NewsController::class, 'add'])->name('add');
+        //post add with img upload
+        Route::post('add', [ App\Http\Controllers\NewsController::class, 'store']  )->name('addProccess');
+
+        Route::get('edit/{id}', [App\Http\Controllers\NewsController::class, 'edit'] ) ->name('edit');
+        //post update
+        Route::post('edit/{id}', [App\Http\Controllers\NewsController::class, 'update'] )->name('update');
+        
+        //delete news
+        Route::get('delete/{id}',  [App\Http\Controllers\NewsController::class, 'delete'] )->name('delete');
+
+    });
+
 
     //categories manage group route , view like admin.pages.categories
     Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
@@ -171,7 +188,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
 });
 
 //single view post_type=movies and /{slug}
-Route::get('/{movie}', [App\Http\Controllers\MoviesController::class, 'single'])->name('single' );
+Route::get('/{post}', [App\Http\Controllers\MoviesController::class, 'single'])->name('single' );
 
 
 // fallaback route

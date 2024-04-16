@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable();
             $table->string('description')->nullable();
             $table->string('type')->nullable()->default('post');
-            $table->integer('parent')->nullable()->default(0);
+            $table->integer('parent')->nullable()->default(0)->foriegn('id')->on('category')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('category');
     }
 };
