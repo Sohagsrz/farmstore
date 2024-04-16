@@ -21,6 +21,14 @@ class Category extends Model
     {
         return 'slug';
     }
+
+    // custom fields for category, with name & value, type=category and obj_id = category_id
+    public function custom_fields()
+    {
+        return $this->hasMany(CustomFields::class, 'obj_id', 'id')->where('type', 'category');
+    }
+
+    
     
  
 

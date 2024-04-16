@@ -96,5 +96,34 @@ public function getRole()
   return $this->roles()->first()->name;
 
 }
+// is admin
+public function isAdmin()
+{
+  return $this->hasRole('admin');
+}
+//custom fields for user, get with name & value, type=user and obj_id = user_id
+public function custom_fields()
+{
+    return $this->hasMany(CustomFields::class, 'obj_id', 'id')->where('type', 'user');
+}
+// set custom field
+public function setCustomField($name, $value)
+{
+  update_field(
+    $name,
+    $value,
+    'user',
+    $this->id
+  );
+   
+}
+// get field by key
+public function getCustomField($name)
+{
+  return get_field($name, 'user', $this->id);
+}
+
+
+
 
 }
