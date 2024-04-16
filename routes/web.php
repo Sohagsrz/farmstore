@@ -140,14 +140,33 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
         Route::get('delete/{id}',  [App\Http\Controllers\CategoryController::class, 'delete'] )->name('delete');
     });
 
+    //users manage group route , view like admin.pages.users
+    Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
 
-    Route::get('users', function () {
-        return view('admin.users');
-    })->name('users');
+        Route::get('/',[App\Http\Controllers\UserController::class, 'index'])->name('index');
+        Route::get('add',  [ App\Http\Controllers\UserController::class, 'add'])->name('add');
+        //post add with img upload
+        Route::post('add', [ App\Http\Controllers\UserController::class, 'store']  )->name('store');
 
-    Route::get('settings', function () {  return view('admin.pages.settings'); })->name('settings');
+        Route::get('edit/{id}', [App\Http\Controllers\UserController::class, 'edit'] ) ->name('edit');
+        //post update
+        Route::post('update/{id}', [App\Http\Controllers\UserController::class, 'update'] )->name('update');
+        
+        //delete user
+        Route::get('delete/{id}',  [App\Http\Controllers\UserController::class, 'delete'] )->name('delete');
+    } );
+
+
+ 
+
+    Route::get('settings', [App\Http\Controllers\AdminController::class, 'settings']  )->name('settings');
     //store settings 
-    Route::post('settings', [App\Http\Controllers\AdminController::class, 'settingsStore'] )->name('settingsProccess');
+    Route::post('settings',)->name('settingsProccess');
+    //profile 
+    Route::get('profile', [App\Http\Controllers\AdminController::class, 'profile']   )->name('profile');
+    //store profile
+    Route::post('profile', [App\Http\Controllers\AdminController::class, 'profileStore'] )->name('profileProccess');
+
     
 });
 

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 { 
@@ -93,7 +94,10 @@ public function assignRole($role)
 //get current role 
 public function getRole()
 {
-  return $this->roles()->first()->name;
+  //get role name
+  if($this->roles()->first() == null) return 'user';
+
+  return $this->roles()->first()->name; 
 
 }
 // is admin

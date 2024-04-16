@@ -62,7 +62,7 @@
                                             
                                             <a href="{{route('admin.categories.edit',['id'=>$category->id])}}" class
                                             ="btn btn-sm btn-neutral"><i class="bi bi-pencil"></i></a>
-                                            <a href="{{route('admin.categories.delete',['id'=>$category->id])}}" onclick="return confirm('Are you sure you want to logout ?')" class="btn btn-sm btn-neutral"> <i class="bi bi-trash"></i></a>
+                                            <a href="{{route('admin.categories.delete',['id'=>$category->id])}}" onclick="return confirm('Are you sure you want to delete ?')" class="btn btn-sm btn-neutral"> <i class="bi bi-trash"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach

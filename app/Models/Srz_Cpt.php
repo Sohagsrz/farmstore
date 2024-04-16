@@ -74,6 +74,28 @@ class Srz_Cpt extends Model
     {
         return 'post_slug';
     }
+    //custom fields for user, get with name & value, type=user and obj_id = user_id
+    public function custom_fields()
+    {
+        return $this->hasMany(CustomFields::class, 'obj_id', 'id')->where('type', $this->post_type);
+    }
+    // set custom field
+    public function setCustomField($name, $value)
+    {
+        update_field(
+            $name,
+            $value,
+            $this->post_type,
+            $this->id
+        );
+    
+    }
+    // get field by key
+    public function getCustomField($name)
+    {
+        return get_field($name, $this->post_type, $this->id);
+    }
+
 
 
 }

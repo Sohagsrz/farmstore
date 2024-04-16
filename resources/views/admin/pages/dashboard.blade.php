@@ -78,13 +78,13 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-xl-3 col-sm-6 col-12">
+                   <div class="col-xl-3 col-sm-6 col-12">
                         <div class="card shadow border-0">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Active</span>
-                                        <span class="h3 font-bold mb-0"> 200</span>
+                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Users</span>
+                                        <span class="h3 font-bold mb-0"> <?php echo  db()::table('users')->count();?></span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
@@ -94,7 +94,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div> 
                 </div>
             </div>
         </main>

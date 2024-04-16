@@ -32,7 +32,7 @@
                             <h5 class="mb-0">All {{$name}}</h5>
                         </div>
                         <div class="col text-end">
-                            <a href="{{route('admin.movies.add')}}" class="btn btn-sm btn-primary">Add New</a>
+                            <a href="{{route('admin.users.add')}}" class="btn btn-sm btn-primary">Add New</a>
                         </div>
                     </div> 
                      
@@ -42,34 +42,40 @@
                 <table class="table table-hover table-nowrap">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Added</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Views</th>
-                                        <th scope="col">Edit / Delete</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Role</th> 
+                                        <th scope="col">Created At</th>
+                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($movies as $movie)
+                                    @foreach($users as $user)
                                     <tr> 
                                         <td>
-                                            {{$movie->post_title}}
-                                        </td>
+                                            {{$user->name}}
+                                        </td> 
                                         <td>
-                                            {{date('d M Y',strtotime($movie->created_at))}}
-                                        </td>
-                                        <td>
-                                            {{$movie->post_status}}
+                                            {{$user->email}}
                                         </td>
                                          
+                                        <td> 
+                                            {{
+                                                ( $user->getRole())
+                                            }}
+                                        </td> 
                                         <td>
-                                            {{intval(get_field('views','movies', $movie->id, 0))}}
+                                            {{$user->created_at->diffForHumans()}}
                                         </td>
+
                                         <td class="text-end">
-                                        <a href="/{{$movie->post_slug}}" class="btn btn-sm btn-neutral" target="_blank"><i class="bi bi-eye"></i></a>
-                                            <a href="{{route('admin.movies.edit',['id'=>$movie->id])}}" class="btn btn-sm btn-neutral"><i class="bi bi-pencil"></i></a>
-                                            <a href="{{route('admin.movies.delete',['id'=>$movie->id])}}" onclick="return confirm('Are you sure you want to delete ?')" class="btn btn-sm btn-neutral"> <i class="bi bi-trash"></i></a>
-                                             
+                                            @if($user->id != auth()->user()->id) 
+                                            <a href="{{route('admin.users.edit',['id'=>$user->id])}}" class="btn btn-sm btn-neutral"><i class="bi bi-pencil"></i></a>
+                                            <a href="{{route('admin.users.delete',['id'=>$user->id])}}" onclick="return confirm('Are you sure you want to delete ?')" class="btn btn-sm btn-neutral"> <i class="bi bi-trash"></i></a>
+                                            @else
+                                             <b>Your Account :) </b>
+                                             @endif
+
                                         </td>
                                     </tr>
                                     @endforeach
@@ -88,24 +94,24 @@
 
                     
                     <span class="text-muted text-sm">
-                        {{ $movies->firstItem()}}-{{ $movies->lastItem() }} of {{ $movies->total() }} results
+                        {{ $users->firstItem()}}-{{ $users->lastItem() }} of {{ $users->total() }} results
                      </span>
-                     @if($movies->total()>0)
-                        <span class="text-muted text-sm">page {{$movies->currentPage()}} of {{$movies->lastPage()}}</span>
+                     @if($users->total()>0)
+                        <span class="text-muted text-sm">page {{$users->currentPage()}} of {{$users->lastPage()}}</span>
                      @endif
-                     @if ($movies->total() > 1)
+                     @if ($users->total() > 1)
                         <nav aria-label="Page navigation example">
                             <ul class="pagination justify-content-end mb-0">
-                                <li class="page-item {{ $movies->currentPage() == 1 ? 'disabled' : '' }}">
-                                    <a class="page-link" href="{{ $movies->previousPageUrl() }}" tabindex="-1" aria-disabled="true">Previous</a>
+                                <li class="page-item {{ $users->currentPage() == 1 ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $users->previousPageUrl() }}" tabindex="-1" aria-disabled="true">Previous</a>
                                 </li>
-                                @for ($i = 1; $i <= $movies->lastPage(); $i++)
-                                    <li class="page-item {{ $movies->currentPage() == $i ? 'active' : '' }}">
-                                        <a class="page-link" href="{{ $movies->url($i) }}">{{ $i }}</a>
+                                @for ($i = 1; $i <= $users->lastPage(); $i++)
+                                    <li class="page-item {{ $users->currentPage() == $i ? 'active' : '' }}">
+                                        <a class="page-link" href="{{ $users->url($i) }}">{{ $i }}</a>
                                     </li>
                                 @endfor
-                                <li class="page-item {{ $movies->currentPage() == $movies->lastPage() ? 'disabled' : '' }}">
-                                    <a class="page-link" href="{{ $movies->nextPageUrl() }}">Next</a>
+                                <li class="page-item {{ $users->currentPage() == $users->lastPage() ? 'disabled' : '' }}">
+                                    <a class="page-link" href="{{ $users->nextPageUrl() }}">Next</a>
                                 </li>
                             </ul>
                         </nav>
