@@ -8,6 +8,13 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    //chats
+    public function chats()
+    {
+        $name = "Chats";
+        return view('pages.users.chats', compact('name'));
+    }
+
     public function index()
     {
         $name = "Users";

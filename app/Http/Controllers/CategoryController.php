@@ -19,11 +19,11 @@ class CategoryController extends Controller
 {
      
     
-    public $type = 'movies';
+    public $type = 'products';
 
     public function index()
     { 
-        $type= "movies";
+        $type= "products";
         $name= 'Categories';
 
 
@@ -56,7 +56,7 @@ class CategoryController extends Controller
     // add 
     public function add()
     {
-        $type= "movies";
+        $type= "products";
         $name= 'Category'; 
         
         $categories = Category::where('type', $type)
@@ -73,7 +73,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {  
         
-        $type = 'movies';
+        $type = 'products';
 
         //validate request
         $request->validate([
@@ -109,7 +109,7 @@ class CategoryController extends Controller
     {
 
         $name = 'Category';
-        $type = 'movies';
+        $type = 'products';
 
  
         $categories = Category::where('type', $type)
@@ -129,7 +129,7 @@ class CategoryController extends Controller
     // update
     public function update(Request $request, $id)
     { 
-        $type = 'movies';
+        $type = 'products';
         $request->validate([
             'name' => 'required',
             'content' => 'required',
@@ -171,11 +171,11 @@ class CategoryController extends Controller
     { 
 
         // views  field
-        $views = get_field('views','movies', $movie->id);
+        $views = get_field('views','products', $movie->id);
         if($views){
-            update_field('views', intval($views)+1, 'movies', $movie->id);
+            update_field('views', intval($views)+1, 'products', $movie->id);
         }else{
-            update_field('views', 1, 'movies', $movie->id);
+            update_field('views', 1, 'products', $movie->id);
         }
 
         return view('pages.single-movie', compact('movie'));

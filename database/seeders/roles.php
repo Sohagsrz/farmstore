@@ -35,6 +35,17 @@ class roles extends Seeder
             'name' => 'subscriber',
             'description' => 'Subscriber Role'
         ]);
+        // farmer
+        \App\Models\Role::create([
+            'name' => 'farmer',
+            'description' => 'Farmer Role'
+        ]);
+        // customer
+        \App\Models\Role::create([
+            'name' => 'customer',
+            'description' => 'Customer Role'
+        ]);
+
         
        
 

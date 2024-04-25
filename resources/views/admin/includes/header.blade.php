@@ -10,7 +10,7 @@
             </button>
             <!-- Brand -->
             <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="{{route('admin.dashboard')}}">
-                <h3 class="text-success"><span class="text-info">Sohag </span>Movies</h3> 
+                <h3 class="text-success"><span class="text-info">Farm </span>Store</h3> 
             </a>
             <!-- User menu (mobile) -->
             <div class="navbar-user d-lg-none">
@@ -42,11 +42,7 @@
                             <i class="bi bi-house"></i> Dashboard
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('admin.movies.moviesHome')}}">
-                            <i class="bi bi-postcard"></i> Movies
-                        </a>
-                    </li>
+                  
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('admin.categories.categoriesHome')}}">
                             <i class="bi bi-building-add"></i> Categories

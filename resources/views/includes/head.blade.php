@@ -1,8 +1,14 @@
-<meta charset="utf-8">
-<meta name="description" content="">
-<meta name="Saquib" content="Blade">
-<title>Checkout our layout</title>
+<meta charset="utf-8"> 
+<!-- load bootstrap from a cdn --> 
+
+<title>@yield('title')</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- fas icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- CSRF Token -->
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<!-- load bootstrap from a cdn -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/3.0.3/css/bootstrap-combined.min.css">

@@ -50,26 +50,37 @@ Route::get('/', function () {
     ***/
 
     // get recent movies 
-    $posts = Srz_Cpt::where('post_type', 'movies')->orderBy('id', 'desc')->limit(5)->get();
-    return View::make('pages.home', compact('posts'));
+    $products = Srz_Cpt::where('post_type', 'products')->orderBy('id', 'desc')->limit(5)->get();
+    //top farmer 
+    $farmers = User::whereHas('roles', function($q){
+        $q->where('name', 'farmer');
+    })->orderBy('id', 'desc')->limit(5)->get();
+    // get recent news
+    $news = Srz_Cpt::where('post_type', 'news')->orderBy('id', 'desc')->limit(5)->get();
+    $categories = Category::where('type', 'products')->get();
+    return view('pages.home', compact('products', 'farmers', 'news', 'categories'));
 
-});
+})->name('home');
 
 //search results
 Route::get('search', function(Request $request){
     $search = $request->input('q');
-    $posts =  Srz_Cpt::where('post_title', 'like', '%'.$search.'%')->get();
-    return view('pages.search', compact('posts'));
-});
+    $products = Srz_Cpt::where('post_title', 'like', '%'.$search.'%')
+    ->where(
+        'post_type', 'products'	
+    )
+    ->get();
+    return view('pages.search', compact('products', 'request')); 
+})->name("search");
 
  
 //catergory view
 
 Route::get('category/{category}', function(Category $category){ 
     
-    $posts =  $category->posts()->get(); 
+    $products =  $category->posts()->get(); 
     
-    return view('pages.category', compact('category','posts'));
+    return view('pages.category', compact('category','products'));
 
 })->name('category');
 
@@ -95,6 +106,76 @@ Route::get('check', function(){
     return Auth::check();
 })->middleware('role:admin');
 
+    //chats
+    
+    Route::get('chats', [App\Http\Controllers\UserController::class, 'chats'])->name('chats' )->middleware('auth');
+
+    //product single view
+    Route::get('item/{product}', [App\Http\Controllers\ProductsController::class, 'single'])->name('productSingle' );
+    //farmer view
+    Route::get('farmer/shop/{farmer}', [App\Http\Controllers\ProductsController::class, 'farmerSingle'])->name('farmerSingle' );
+
+
+    // add to cart
+    Route::any('add-to-cart/{product}', [App\Http\Controllers\ProductsController::class, 'addToCart'])->name('addToCart' )->middleware('auth');
+    // remove from cart
+    Route::get('remove-from-cart/{product}', [App\Http\Controllers\ProductsController::class, 'removeFromCart'])->name('removeFromCart' )->middleware('auth');
+    // update cart quantity
+    Route::post('update-cart/{product}', [App\Http\Controllers\ProductsController::class, 'updateCart'])->name('updateCart' )->middleware('auth');
+    // cart view
+    Route::get('cart', [App\Http\Controllers\ProductsController::class, 'cart'])->middleware('auth')->name('cart' );
+    Route::get('orders', [App\Http\Controllers\ProductsController::class, 'orders'])->middleware('auth')->name('orders' );
+    //order single view
+    Route::get('order/{order}', [App\Http\Controllers\ProductsController::class, 'order'])->name('orderDetails' )->middleware('auth');
+
+
+    //checkout view
+    Route::get('checkout', [App\Http\Controllers\ProductsController::class, 'checkout'])->name('checkout' )->middleware('auth');
+    //checkout process
+    Route::post('checkout', [App\Http\Controllers\ProductsController::class, 'checkoutProcess'])->name('checkoutProcess' )->middleware('auth');
+
+    // emptyCart
+    Route::get('emptyCart', [App\Http\Controllers\ProductsController::class, 'emptyCart'])->name('emptyCart' )->middleware('auth');
+
+    //only for farmer routes farmer/{pages} group route
+    Route::group(['prefix' => 'farmer', 'as' => 'farmer.', 'middleware' => 'role:farmer'], function () {
+        Route::get('/',  [
+            App\Http\Controllers\ProductsController::class, 'dashboard'
+        ])->name('dashboard');
+        Route::get('add-product', [App\Http\Controllers\ProductsController::class, 'addfromdashboard'])->name('addfromdashboard');
+        //add post
+        Route::post('add-product', [App\Http\Controllers\ProductsController::class, 'storefromdashboard'])->name('storefromdashboard');
+
+         //update product
+        Route::get('edit-product/{product}', [App\Http\Controllers\ProductsController::class, 'editfromdashboard'])->name('editfromdashboard');
+        //update post 
+        Route::post('edit-product/{product}', [App\Http\Controllers\ProductsController::class, 'updatefromdashboard'])->name('updatefromdashboard');
+        // deletefromdashboard 
+        Route::get('delete-product/{product}', [App\Http\Controllers\ProductsController::class, 'deletefromdashboard'])->name('deletefromdashboard');
+        
+        //list products
+        Route::get('products', [App\Http\Controllers\ProductsController::class, 'productslist'])->name('productslist');
+        //settings
+        Route::get('settings', [App\Http\Controllers\ProductsController::class, 'settings'])->name('settings');
+        // settings process
+        Route::post('settings', [App\Http\Controllers\ProductsController::class, 'settingsProcess'])->name('settingsProcess');
+
+        //orders
+        Route::get('orders', [App\Http\Controllers\ProductsController::class, 'orders'])->name('orders');
+        //order single view
+        Route::get('order/{order}', [App\Http\Controllers\ProductsController::class, 'order'])->name('order');
+        //update order
+        Route::get('edit-order/{order}', [App\Http\Controllers\ProductsController::class, 'editOrder'])->name('editOrder');
+        //delete order
+        Route::get('delete-order/{order}', [App\Http\Controllers\ProductsController::class, 'deleteOrder'])->name('deleteOrder');
+
+
+
+
+    });
+    // add product for farmer->middleware('role:farmer');
+   
+
 // route group for admin, names also
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin'], function () {
    
@@ -107,22 +188,30 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
         return view('admin.pages.dashboard');
     })->name('dashboard');
 
-    //movies manage group route , view like admin.pages.movies
-    Route::group(['prefix' => 'movies', 'as' => 'movies.'], function () {
 
-        Route::get('/',[App\Http\Controllers\MoviesController::class, 'index'])->name('moviesHome');
-        Route::get('add',  [ App\Http\Controllers\MoviesController::class, 'add'])->name('add');
+     
+
+    // add product for farmer
+
+ 
+    // product manage group route , view like admin.pages.products
+    Route::group(['prefix' => 'products', 'as' => 'products.'], function () {
+
+        Route::get('/',[App\Http\Controllers\ProductsController::class, 'index'])->name('productsHome');
+        Route::get('add',  [App\Http\Controllers\ProductsController::class, 'add'])->name('add');
         //post add with img upload
-        Route::post('add', [ App\Http\Controllers\MoviesController::class, 'store']  )->name('addProccess');
+        Route::post('add', [App\Http\Controllers\ProductsController::class, 'store']  )->name('addProccess');
 
-        Route::get('edit/{id}', [App\Http\Controllers\MoviesController::class, 'edit'] ) ->name('edit');
+        Route::get('edit/{id}', [App\Http\Controllers\ProductsController::class, 'edit'] ) ->name('edit');
         //post update
-        Route::post('edit/{id}', [App\Http\Controllers\MoviesController::class, 'update'] )->name('update');
+        Route::post('edit/{id}', [App\Http\Controllers\ProductsController::class, 'update'] )->name('update');
         
-        //delete movie
-        Route::get('delete/{id}',  [App\Http\Controllers\MoviesController::class, 'delete'] )->name('delete');
+        //delete product
+        Route::get('delete/{id}',  [App\Http\Controllers\ProductsController::class, 'delete'] )->name('delete');
 
     });
+    
+
     //news manage group route , view like admin.pages.news
     Route::group(['prefix' => 'news', 'as' => 'news.'], function () {
 

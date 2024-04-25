@@ -95,6 +95,11 @@ class Srz_Cpt extends Model
     {
         return get_field($name, $this->post_type, $this->id);
     }
+    // get user
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'post_author', 'id');
+    }
 
 
 

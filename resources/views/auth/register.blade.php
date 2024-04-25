@@ -60,6 +60,21 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+                        <!-- account type farmer or customer -->
+                        <div class="row mb-3">
+                            <label for="account_type" class="col-md-4 col-form-label text-md-end">{{ __('Account Type') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="account_type" class="form-control @error('account_type') is-invalid @enderror" name="account_type" value="{{ old('account_type') }}" required autocomplete="account_type">
+                                    <option value="farmer">Farmer</option>
+                                    <option value="customer">Customer</option>
+                                </select>
+                                @error('account_type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
