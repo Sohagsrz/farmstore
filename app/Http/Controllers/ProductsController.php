@@ -166,7 +166,7 @@ class ProductsController extends Controller
         $product->post_status = 'publish';
         $product->save();
         //add categories
-        $category= $request->input('categories');
+        $category= $request->input('category');
         if($category){
              
                  $product->categories()->attach($category);
@@ -275,8 +275,26 @@ class ProductsController extends Controller
 
     //cart
     public function cart(){
+        // delivery charge added
+        $delivery_charge = 0;
+       
+
+        // add condition to only apply on totals, not in subtotal
+        $condition = new \Darryldecode\Cart\CartCondition(array(
+            'name' => 'Delivery Charge 100',
+            'type' => 'shipping',
+            'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
+            'value' => '+100',
+            'order' => 1 // the order of calculation of cart base conditions. The bigger the later to be applied.
+        ));
+        \Cart::session(Auth::id())->condition($condition);
+        $cartConditions = \Cart::getConditions();
+        
+
+
+
         $cart = \Cart::session(Auth::id())->getContent();
-        return view('pages.cart', compact('cart'));
+        return view('pages.cart', compact('cart' , 'cartConditions'));
     }
     // emptyCart
     public function emptyCart(){

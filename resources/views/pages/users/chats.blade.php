@@ -5,8 +5,8 @@
         <div class="row chat-container">
             <!-- Left side: Chats list -->
             <div class="col-md-3 chats-list">
-                <div class="chat active">User 1</div>
-                <div class="chat">User 2</div>
+                <div class="chat active">Alif</div>
+                <div class="chat">Sajjat</div>
                 <!-- Add more chats here -->
             </div>
             <!-- Middle: Messages/Conversations -->
@@ -39,8 +39,8 @@
             <!-- Right side: User info -->
             <div class="col-md-3 user-info">
                 <h4>User Info</h4>
-                <p>Name: User 1</p>
-                <p>Email: user1@example.com</p>
+                <p>Name: Alif</p>
+                <p>Email: alif@mail.com</p>
                 <!-- Add more user info here -->
                 <!-- Video Call -->
                 <button id="startButton" class="btn btn-primary">Start Video Call</button>

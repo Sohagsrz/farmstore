@@ -10,10 +10,14 @@
             </div>
             <div class="col-md-6">
                 <h1>{{$product->post_title}}</h1>  
+                <p> Framer Information  </p>
                 <p>Farmer: <a href="{{route('farmerSingle', $product->user()->first())}}">
                  {{
                 $product->user()->first()->name
                 }}</a></p>
+                <p>Email: {{$product->user()->first()->email}}</p>
+                <p>Address: {{ get_field('address','user',$product->user()->first()->id, '')}}</p>
+                <hr/>
                  @if($product->categories()->first())
                 <p>Category: <a href="{{route('category', $product->categories()->first())}}">
                     {{ $product->categories()->first()->name }}
@@ -27,7 +31,11 @@
                 }}</h2>
                 <form action="{{route('addToCart', $product)}}" method="POST">
                     @csrf
-                    <input type="number" name="quantity" value="1" min="{{
+                    <input type="number" name="quantity"
+                    value="{{
+                    get_field('min_order','products', $product->id, 1)
+                    }}"
+                       min="{{
                     get_field('min_order','products', $product->id, 1)
                     }}" max="{{get_field('quantity','products', $product->id, 1)
                     }}">

@@ -9,6 +9,32 @@
     <div class="alert alert-info" role="alert">
         <strong>Status:</strong> {{$order->post_status}}
     </div>
+    <div>
+
+    Customer : {{get_field('name','orders', $order->id, '')}}
+    </div>
+    <div>
+        Address: {{get_field('address','orders', $order->id, '')}}
+    </div>
+    <div>
+        Phone: {{get_field('phone','orders', $order->id, '')}}
+    </div>
+    <div>
+        Email: {{get_field('email','orders', $order->id, '')}}
+    </div>
+    <div>
+        Order Date: {{$order->created_at}}
+    </div>
+    <div>
+        Payment Method: {{get_field('paymentMethod','orders', $order->id, '')}}
+    </div>
+    <div>
+        Delivery Charge: ৳100
+    </div>
+   
+    
+     
+
     <div class="table-responsive">
         <table class="table table-bordered">
             <thead>

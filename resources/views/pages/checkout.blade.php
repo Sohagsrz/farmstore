@@ -16,6 +16,7 @@
                             <li class="list-group-item">{{$item->name}} - ৳{{$item->price}} x {{$item->quantity}} = ৳{{$item->price * $item->quantity}}
                         </li>
                             @endforeach 
+                        <li class="list-group-item">Delivery Charge: +৳100</li>
                         </ul>
                         <hr>
                         <!-- Display total price -->

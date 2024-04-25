@@ -50,13 +50,14 @@ Route::get('/', function () {
     ***/
 
     // get recent movies 
-    $products = Srz_Cpt::where('post_type', 'products')->orderBy('id', 'desc')->limit(5)->get();
+    $products = Srz_Cpt::where('post_type', 'products')->orderBy('id', 'desc')->limit(12)->get();
     //top farmer 
     $farmers = User::whereHas('roles', function($q){
         $q->where('name', 'farmer');
-    })->orderBy('id', 'desc')->limit(5)->get();
+    })->orderBy('id', 'desc')->limit(12)->get();
+    
     // get recent news
-    $news = Srz_Cpt::where('post_type', 'news')->orderBy('id', 'desc')->limit(5)->get();
+    $news = Srz_Cpt::where('post_type', 'news')->orderBy('id', 'desc')->limit(3)->get();
     $categories = Category::where('type', 'products')->get();
     return view('pages.home', compact('products', 'farmers', 'news', 'categories'));
 

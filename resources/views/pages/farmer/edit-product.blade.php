@@ -26,6 +26,17 @@
         @endif 
         <form action="{{route('farmer.editfromdashboard', $product)}}" method="POST" enctype="multipart/form-data" >
         @csrf
+        <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="category">
+                    <option selected>Choose...</option>
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}" 
+                        @if(in_array($category->id, $selected_categories) ) selected @endif
+                        >{{$category->name}}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="mb-3">
                 <label for="productName" class="form-label">Product Name</label>
                 <input type="text" class="form-control" id="productName" name="post_title" value="{{$product->post_title}}" placeholder="Enter product name">
@@ -78,16 +89,7 @@
                 value="{{get_field('thumbnail','products', $product->id, 'https://via.placeholder.com/400x300')}}">
                 
             </div>
-            <div class="mb-3">
-                <label for="category" class="form-label">Category</label>
-                <select class="form-select" id="category" name="category">
-                    <option selected>Choose...</option>
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}" 
-                        @if(in_array($category->id, $selected_categories) ) selected @endif
-                        >{{$category->name}}</option>
-                    @endforeach
-                </select>
+           
 
             <button type="submit" class="btn btn-primary">Update Product</button>
         </form>

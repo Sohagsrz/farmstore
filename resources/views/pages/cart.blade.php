@@ -20,7 +20,9 @@
                     <tr>
                         <td colspan="5" class="text-center">Your cart is empty</td>
                     </tr>
-                    @endif
+                    @else
+                   
+                  
 
                     @foreach($cart as $item)
                     <tr>
@@ -47,16 +49,26 @@
                             <a href="{{route('removeFromCart', $item->associatedModel)}}" type="button" class="btn btn-sm btn-danger">Remove</a>
                         </td>
                     </tr>
+
                     @endforeach 
-                    <!-- Add more rows for additional products in the cart -->
+                    
+                    @foreach($cartConditions as $condition)
+                    <tr>
+                        <td colspan="4">{{$condition->getName()}}</td>
+                        <td>+৳{{$condition->getCalculatedValue(Cart::getSubTotal())}}</td>
+                    </tr>
+                    @endforeach
+
+
                 </tbody>
                 <tfoot>
                     <tr>
                         <td colspan="3" class="text-end"><strong>Total:</strong></td>
-                        <td>৳{{Cart::getSubTotal()}}</td>
+                        <td>৳{{Cart::getTotal()}}</td>
                         <td></td>
                     </tr>
                 </tfoot>
+                @endif
             </table>
         </div> 
         <div class="text-end">

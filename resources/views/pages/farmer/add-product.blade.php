@@ -25,6 +25,17 @@
         @endif 
         <form action="{{route('farmer.storefromdashboard')}}" method="POST" enctype="multipart/form-data" >
         @csrf
+        
+        <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" name="category">
+                    <option selected>Choose...</option>
+                    @foreach($categories as $category)
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+            
             <div class="mb-3">
                 <label for="productName" class="form-label">Product Name</label>
                 <input type="text" class="form-control" id="productName" name="post_title" value="{{old('post_title')}}" placeholder="Enter product name">
@@ -68,14 +79,6 @@
                 Or you can enter the image URL
                 <input type="text" class="form-control" id="image" name="img" placeholder="Enter image URL"  value="{{old('img')}}">
             </div>
-            <div class="mb-3">
-                <label for="category" class="form-label">Category</label>
-                <select class="form-select" id="category" name="category">
-                    <option selected>Choose...</option>
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
-                    @endforeach
-                </select>
 
             <button type="submit" class="btn btn-primary">Add Product</button>
         </form>

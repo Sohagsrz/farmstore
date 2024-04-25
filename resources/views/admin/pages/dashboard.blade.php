@@ -42,8 +42,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Movies</span>
-                                        <span class="h3 font-bold mb-0"> {{db()::table('srz_cpt')->where([  'post_type' =>'movies',  ])->count()}} </span>
+                                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total Products</span>
+                                        <span class="h3 font-bold mb-0"> {{db()::table('srz_cpt')->where([  'post_type' =>'products',  ])->count()}} </span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">

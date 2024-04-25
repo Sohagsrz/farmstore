@@ -71,7 +71,7 @@
                                 }}" class="card-img-top" alt="Product Image">
                                 <div class="card-body">
                                     <h5 class="card-title
-                                    ">{{ $product->post_content }}</h5>
+                                    ">{{ $product->post_title }}</h5>
                                     <p class="card-text">Price: ৳{{ get_field('price','products', $product->id, '0') }}</p>
                                     <p class="card-text">Stock: {{ get_field('quantity','products', $product->id, '0') }}</p>
                                     <p class="card-text">Location: {{ get_field('location','products', $product->id, '0') }}</p>

@@ -1,6 +1,6 @@
 <div class="container text-center">
             <p>&copy; {{date('Y')}} {{env('APP_NAME')}}. All rights reserved.</p>
-            <p>Designed with <i class="bi-heart-fill text-danger"></i> by Aiub Team</p>
+            <p>Designed with <i class="bi-heart-fill text-danger"></i> by AIUB NOOB</p>
         </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
